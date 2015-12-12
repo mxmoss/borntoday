@@ -1,4 +1,4 @@
-# Description:
+# Description:1
 # Extract a list of who was born or died on a specific date of the year
 # Output as HTML for inclusion in a web page
 #
@@ -9,13 +9,13 @@ import datetime
 import urllib.request		# this for python 3 and later
 import requests
 
-# Wikipedia has a page for each day of the year eg: https://en.wikipedia.org/wiki/December_11
-myURL = "en.wikipedia.org/wiki/"
-
 #get today's date
 today = datetime.date.today()
 myDate = today.strftime('%B_%d')
-page = urllib.request.urlopen("http://"+myURL+myDate)
+
+# Wikipedia has a page for each day of the year eg: https://en.wikipedia.org/wiki/December_11
+myURL = "http://en.wikipedia.org/wiki/"+myDate
+page = urllib.request.urlopen(myURL)
 
 #parse
 soup = BeautifulSoup(page, "html.parser")
