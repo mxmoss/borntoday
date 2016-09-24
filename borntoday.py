@@ -23,30 +23,20 @@ soup = BeautifulSoup(page, "html.parser")
 
 # Extract all list items <ul>
 uSections = soup.find_all('ul')
-words = ['math', 'scientist', 'programm']
+words = ['mathe', 'scientist', 'programm', 'comput']
 
 print('<html><head><title>Events for {0}</title></head><body>'.format(today))
 
-'''
-# print out sections
-# skip first <ul> entry
-for uSection in uSections[1:]:
-  print('{0}'.format(uSection))
-'''
-
-
+# extract all 4 sections
+sItems = []
 for iEvents in uSections[1:4]:
-  print('{0}'.format(iEvents.find_all('li')))
-  
-'''
-# print out items that match
-for iEvents in uSections[1:4]:
-  print('hey!{0}<br/>'.format(iEvents))
-  for stopword in words:
-    print(stopword)
-    if stopword in iEvents: #words in li:
-      print('ho!')
-      print('{0}'.format(iEvents))
-'''
+  snippet = iEvents.find_all('li')
+  sItems = sItems + snippet
+	
+#spew them out, but only if they contain keywords
+for sItem in sItems:
+	for stopword in words:
+		if stopword in sItem.get_text():
+			print('{0}'.format(sItem))
 
 print('</body></html>')
