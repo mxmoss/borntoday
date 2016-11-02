@@ -37,6 +37,8 @@ def BornDied():
   for sItem in sItems:
     for stopword in words:
       if stopword in sItem.get_text():
+        print('{0}'.format(sItem))
+#        print('{0}'.format(sItem).encode('ascii','ignore'))
   print('</body></html>')
 
 BornDied()
