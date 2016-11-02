@@ -9,34 +9,34 @@ import datetime
 import urllib.request		# this for python 3 and later
 import requests
 
-#get today's date
-today = datetime.date.today()
-myDate = today.strftime('%B_%d')
+def BornDied():
+  #get today's date
+  today = datetime.date.today()
+  myDate = today.strftime('%B_%d')
 
-# Wikipedia has a page for each day of the year eg: https://en.wikipedia.org/wiki/December_11
-myURL = "http://en.wikipedia.org/wiki/"+myDate
-print(myURL)
-page = urllib.request.urlopen(myURL)
+  # Wikipedia has a page for each day of the year eg: https://en.wikipedia.org/wiki/December_11
+  myURL = "http://en.wikipedia.org/wiki/"+myDate
+  page = urllib.request.urlopen(myURL)
 
-#parse
-soup = BeautifulSoup(page, "html.parser")
+  #parse
+  soup = BeautifulSoup(page, "html.parser")
 
-# Extract all list items <ul>
-uSections = soup.find_all('ul')
-words = ['mathe', 'scientist', 'programm', 'comput']
+  # Extract all list items <ul>
+  uSections = soup.find_all('ul')
+  words = ['mathe', 'scientist', 'programm', 'comput']
 
-print('<html><head><title>Events for {0}</title></head><body>'.format(today))
+  # extract all 4 sections
+  sItems = []
+  for iEvents in uSections[1:4]:
+    snippet = iEvents.find_all('li')
+    sItems = sItems + snippet
+    
+  #spew them out, but only if they contain keywords
+  print('<html><head><base href="http://en.wikipedia.org/."> <title>Events for {0}</title></head><body>'.format(today))
+  print(myURL)
+  for sItem in sItems:
+    for stopword in words:
+      if stopword in sItem.get_text():
+  print('</body></html>')
 
-# extract all 4 sections
-sItems = []
-for iEvents in uSections[1:4]:
-  snippet = iEvents.find_all('li')
-  sItems = sItems + snippet
-	
-#spew them out, but only if they contain keywords
-for sItem in sItems:
-	for stopword in words:
-		if stopword in sItem.get_text():
-			print('{0}'.format(sItem))
-
-print('</body></html>')
+BornDied()
