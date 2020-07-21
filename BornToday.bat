@@ -1,3 +1,4 @@
+rem borntoday\scripts\activate
 set PYTHONIOENCODING=:replace
 python -m venv borntoday
 borntoday\Scripts\activate
