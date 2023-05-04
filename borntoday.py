@@ -17,8 +17,6 @@ def BornDied(aDate):
   # Wikipedia has a page for each day of the year eg: https://en.wikipedia.org/wiki/December_11
   myURL = "http://en.wikipedia.org/wiki/"+myDate
   page = urllib.request.urlopen(myURL)
-
-  #parse
   soup = BeautifulSoup(page, "html.parser")
 
   # Extract all list items <ul>
@@ -31,24 +29,27 @@ def BornDied(aDate):
     sItems = sItems + snippet
     
   #spew them out, but only if they contain keywords
-  print('<html><head><base href="{0}"> <title>Events for {1}</title></head><body>'.format(myURL, aDate))
+#  myHTML = '<base href="{0}"> <title>Events for {1}</title></head><body>'.format(myURL, aDate)
+  myHTML = '<base href="{0}"> <h2>Events for {1}</h2>'.format(myURL, aDate)
   for sItem in sItems:
     for stopword in CONST_WORDS:
       if stopword in sItem.get_text():
-        print('{0}'.format(sItem))
+        myHTML = myHTML + '{0}'.format(sItem)
         break
-
-#        print('{0}'.format(sItem).encode('ascii','ignore'))
-  print('</body></html>')
-
+  return myHTML
 
 def Main():
   #from today
   start_date = datetime.date.today()
   #next 30 days
   day_count = 30
+
+  myHTML = ''
   for single_date in (start_date + timedelta(n) for n in range(day_count)):
-      BornDied(single_date)
-    
+      myHTML = myHTML + BornDied(single_date)
+
+  print('<html><head>')
+  print(myHTML)
+  print('</body></html>')
 
 Main()
