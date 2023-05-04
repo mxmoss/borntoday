@@ -41,10 +41,14 @@ def BornDied(aDate):
 #        print('{0}'.format(sItem).encode('ascii','ignore'))
   print('</body></html>')
 
-#from today
-start_date = datetime.date.today()
-#next 30 days
-day_count = 30
-for single_date in (start_date + timedelta(n) for n in range(day_count)):
-    BornDied(single_date)
+
+def Main():
+  #from today
+  start_date = datetime.date.today()
+  #next 30 days
+  day_count = 30
+  for single_date in (start_date + timedelta(n) for n in range(day_count)):
+      BornDied(single_date)
     
+
+Main()
